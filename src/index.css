@@ -8,3 +8,18 @@ body {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+.react-icons {
+    vertical-align: middle;
+    height: 24px;
+    width: 24px;
+    padding: 12px;
+    margin: 0 4px;
+    color: #5f6368;
+}
+
+.react-icons:hover {
+    background-color: rgba(60, 64, 67, 0.08);
+    outline: none;
+    border-radius: 100%;
+}
