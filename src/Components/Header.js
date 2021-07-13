@@ -4,8 +4,6 @@ import { FiHelpCircle } from "react-icons/fi";
 import { BsGear } from "react-icons/bs";
 import { CgMenuGridO } from "react-icons/cg";
 
-
-
 const StyledHeader = styled.section`
     display:flex;
     flex-direction: row;
