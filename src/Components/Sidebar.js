@@ -1,4 +1,6 @@
 import styled from 'styled-components'
+import { BiTag } from "react-icons/bi";
+import { GoInbox } from "react-icons/go";
 
 const StyledSidebar = styled.section`
     display:flex;
@@ -31,18 +33,65 @@ const ComposeButton = styled.button`
     }
 `;
 
+const TagWrapper = styled.div`
+    display:flex;
+    flex-direction: column;
+    padding-left:0px;
+`;
 
+const TagRow = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+`;
 
-const Sidebar = ({data}) => {
+const TagIconName = styled.div`
+ 
+`;
+
+const TagItem = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items:center;
+  justify-content: space-between;
+  width:100px;
+  margin-bottom: 20px;
+`;
+
+const TagText = styled.span`
+    width:80px;
+`;
+
+const TagEmailCount = styled.span``;
+
+const Sidebar = ({data, tags}) => {
     console.log(data);
     return (
-        <StyledSidebar>
-            <ComposeButton>
-                <img src="https://www.gstatic.com/images/icons/material/colored_icons/1x/create_32dp.png" alt="" />
-                Compose
-            </ComposeButton>
-        </StyledSidebar>
-    )
+      <StyledSidebar>
+        <ComposeButton>
+          <img
+            src="https://www.gstatic.com/images/icons/material/colored_icons/1x/create_32dp.png"
+            alt=""
+          />
+          Compose
+        </ComposeButton>
+        <TagWrapper>
+          <TagRow>
+            <TagItem>
+              <TagText>Inbox</TagText>
+              <GoInbox size="24" color="grey"></GoInbox>
+            </TagItem>
+            {tags.map((t) => (
+              <TagItem>
+                <TagText>{t}</TagText>
+                <BiTag size="24" color="grey"></BiTag>
+              </TagItem>
+            ))}
+          </TagRow>
+        </TagWrapper>
+      </StyledSidebar>
+    );
 }
 
 export default Sidebar;

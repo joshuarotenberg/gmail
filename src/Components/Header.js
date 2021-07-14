@@ -71,6 +71,7 @@ const Header = () => {
                 <BsGear className="react-icons"/>
                 <CgMenuGridO className="react-icons"/>
             </RightLogoWrapper>
+            
         </StyledHeader>
     )
 }

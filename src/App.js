@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import "./App.css";
 import styled from "styled-components";
 import EmailIndex from "./Components/EmailIndex";
@@ -20,13 +21,16 @@ const Main = styled.section`
 `;
 
 function App() {
+  let initialState = data.messages;
+  const [emails, setEmails] = useState(initialState);
+  const [tags, setTags] = useState(['travel', 'work']);
 
   return (
     <Wrapper>
       <Header />
       <Main>
-        <Sidebar data={data} />
-        <EmailIndex data={data} />
+        <Sidebar data={data} tags={tags} />
+        <EmailIndex data={data} emails={emails}  setEmails={setEmails} tags={tags}/>
       </Main>
     </Wrapper>
   );

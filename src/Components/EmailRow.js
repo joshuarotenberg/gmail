@@ -43,13 +43,15 @@ const EmailSubjectBodyCol = styled.td`
     position: relative;
     top: -27px;
     left: 48px;
-    height:100px;
+    height: 100px;
   }
   @media (min-width: 768px) {
     white-space: wrap;
   }
   text-overflow: ellipsis;
   z-index: 9;
+  display: flex;
+  flex-direction: row;
 `;
 
 const EmailSenderCol = styled.td`
@@ -60,6 +62,7 @@ const EmailSenderCol = styled.td`
   }
   width: 200px;
 `;
+
 
 const EmailSenderText = styled.span`
   font-weight: 700;
@@ -99,6 +102,20 @@ const EmailBodyText = styled.span`
     overflow: hidden;
     width: 330px;
   }
+`;
+
+const Tag = styled.div`
+  font-size: 12px;
+  background-color: #e8e8e8;
+  padding:2px 3px;
+  margin-right: 5px;
+  border-radius: 4px;
+`;
+
+const TagWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `;
 
     
@@ -153,7 +170,10 @@ const dateToFormat = date => {
           <EmailSenderText>{email.sender}</EmailSenderText>
         </EmailSenderCol>
         <EmailSubjectBodyCol>
-          <EmailSubjectText className="bold">{email.subject}</EmailSubjectText>{" "}
+          <TagWrapper>{email.tags.map((t) => <Tag>{t}</Tag>)}</TagWrapper>
+          <EmailSubjectText className="bold">
+            {email.subject}
+          </EmailSubjectText>{" "}
           <EmailBodyText>- {stripHtml(email.body)}</EmailBodyText>
         </EmailSubjectBodyCol>
         <EmailDateCol className="bold">{dateToFormat(email.date)}</EmailDateCol>
