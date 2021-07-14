@@ -127,7 +127,7 @@ const stripHtml = str => {
 
 
  
-const EmailRow = ({email, id, starred, setStarred}) => {
+const EmailRow = ({email, id, starred, setStarred, checked, toggleCheck}) => {
 
 const dateToFormat = date => {
     let formattedDate = date;
@@ -140,7 +140,7 @@ const dateToFormat = date => {
 
  const toggleStar = () => {
      const newStarred = [...starred];
-     let checked = { ...newStarred[id - 1] };
+     let checked = { ...newStarred[id] };
 
      if (!checked.starred) {
         checked.starred = true;
@@ -148,14 +148,19 @@ const dateToFormat = date => {
          checked.starred = false;
      }
      
-     newStarred[id - 1] = checked;
+     newStarred[id] = checked;
      setStarred(newStarred);
  }
-
+ console.log("id", id, "checked id", checked[id - 1]);
     return (
       <StyledEmailRow key={id}>
         <EmailActionCol>
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            name={id - 1}
+            onChange={() => toggleCheck(id - 1)}
+            checked={checked[id - 1].checked}
+          />
           {starred[id - 1].starred === false ? (
             <AiOutlineStar className="react-icons" onClick={toggleStar} />
           ) : (
@@ -170,11 +175,15 @@ const dateToFormat = date => {
           <EmailSenderText>{email.sender}</EmailSenderText>
         </EmailSenderCol>
         <EmailSubjectBodyCol>
-          <TagWrapper>{email.tags.map((t) => <Tag>{t}</Tag>)}</TagWrapper>
+          <TagWrapper>
+            {email.tags.map((t) => (
+              <Tag>{t}</Tag>
+            ))}
+          </TagWrapper>
           <EmailSubjectText className="bold">
-            {email.subject}
-          </EmailSubjectText>{" "}
-          <EmailBodyText>- {stripHtml(email.body)}</EmailBodyText>
+            {email.subject}&nbsp;
+          </EmailSubjectText>
+          <EmailBodyText> - {stripHtml(email.body)}</EmailBodyText>
         </EmailSubjectBodyCol>
         <EmailDateCol className="bold">{dateToFormat(email.date)}</EmailDateCol>
       </StyledEmailRow>

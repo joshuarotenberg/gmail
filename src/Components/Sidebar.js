@@ -63,7 +63,6 @@ const TagText = styled.span`
     width:80px;
 `;
 
-const TagEmailCount = styled.span``;
 
 const Sidebar = ({data, tags}) => {
     console.log(data);
