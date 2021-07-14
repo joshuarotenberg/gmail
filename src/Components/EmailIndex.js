@@ -1,7 +1,12 @@
-const EmailIndex = () => {
+import EmailRow from './EmailRow';
+
+const EmailIndex = ({data}) => {
+    console.log(data.messages)
     return (
         <div>
-            Email index
+           <table>
+            {data.messages.map(row => <EmailRow email={row}/> )}
+           </table>
         </div>
     )
 }

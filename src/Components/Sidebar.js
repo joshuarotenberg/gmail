@@ -33,7 +33,8 @@ const ComposeButton = styled.button`
 
 
 
-const Sidebar = () => {
+const Sidebar = ({data}) => {
+    console.log(data);
     return (
         <StyledSidebar>
             <ComposeButton>

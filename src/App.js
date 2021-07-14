@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import EmailIndex from './Components/EmailIndex';
 import Header from './Components/Header';
 import Sidebar from './Components/Sidebar';
+import {data} from './Services/Data'
 
 const Wrapper = styled.section`
   background: white;
@@ -23,8 +24,8 @@ function App() {
     <Wrapper>
      <Header />
      <Main>
-      <Sidebar />
-      <EmailIndex />
+      <Sidebar data={data}/>
+      <EmailIndex data={data}/>
      </Main>
     </Wrapper>
   );
