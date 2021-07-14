@@ -2,13 +2,23 @@ body,
 td,
 input,
 textarea,
-select {
+select,
+span {
     margin: 0;
-    font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    overflow-x: hidden;
 }
 
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.bold {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
 }
 
 .react-icons {
