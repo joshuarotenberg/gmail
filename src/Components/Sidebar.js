@@ -64,8 +64,8 @@ const TagText = styled.span`
 `;
 
 
-const Sidebar = ({data, tags}) => {
-    console.log(data);
+const Sidebar = ({emails, tags}) => {
+    console.log(emails);
     return (
       <StyledSidebar>
         <ComposeButton>

@@ -5,7 +5,7 @@ import Moment from "react-moment";
 
 
 
-const StyledEmailRow = styled.tr`
+const StyledEmailRow = styled.div`
   @media (max-width: 767.98px) {
     flex-direction: column;
     white-space: wrap;
@@ -27,14 +27,14 @@ const StyledEmailRow = styled.tr`
   }
 `;
 
-const EmailActionCol = styled.td`
+const EmailActionCol = styled.div`
      margin-left: 10px;
      display:flex;
      flex-direction: row;
      align-items: center;
 `;
 
-const EmailSubjectBodyCol = styled.td`
+const EmailSubjectBodyCol = styled.div`
   @media (max-width: 767.98px) {
     overflow: none;
     white-space: wrap;
@@ -43,7 +43,6 @@ const EmailSubjectBodyCol = styled.td`
     position: relative;
     top: -27px;
     left: 48px;
-    height: 100px;
   }
   @media (min-width: 768px) {
     white-space: wrap;
@@ -54,7 +53,7 @@ const EmailSubjectBodyCol = styled.td`
   flex-direction: row;
 `;
 
-const EmailSenderCol = styled.td`
+const EmailSenderCol = styled.div`
   @media (max-width: 767.98px) {
     position: relative;
     top: -35px;
@@ -68,7 +67,7 @@ const EmailSenderText = styled.span`
   font-weight: 700;
 `;
 
-const EmailDateCol = styled.td`
+const EmailDateCol = styled.div`
   @media (max-width: 767.98px) {
     width: 50px;
     right: 20px;
@@ -113,6 +112,9 @@ const Tag = styled.div`
 `;
 
 const TagWrapper = styled.div`
+ @media (max-width: 767.98px) {
+     display:none;
+ }
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -127,67 +129,67 @@ const stripHtml = str => {
 
 
  
-const EmailRow = ({email, id, starred, setStarred, checked, toggleCheck}) => {
-
-const dateToFormat = date => {
+const EmailRow = ({ email, id, starred, setStarred, checked, toggleCheck }) => {
+  const dateToFormat = (date) => {
     let formattedDate = date;
-     return (
-       <Moment format="MMM D" withTitle>
-         {formattedDate}
-       </Moment>
-     );
- };
-
- const toggleStar = () => {
-     const newStarred = [...starred];
-     let checked = { ...newStarred[id] };
-
-     if (!checked.starred) {
-        checked.starred = true;
-     } else {
-         checked.starred = false;
-     }
-     
-     newStarred[id] = checked;
-     setStarred(newStarred);
- }
- console.log("id", id, "checked id", checked[id - 1]);
     return (
-      <StyledEmailRow key={id}>
-        <EmailActionCol>
-          <input
-            type="checkbox"
-            name={id - 1}
-            onChange={() => toggleCheck(id - 1)}
-            checked={checked[id - 1].checked}
-          />
-          {starred[id - 1].starred === false ? (
-            <AiOutlineStar className="react-icons" onClick={toggleStar} />
-          ) : (
-            <AiFillStar
-              className="react-icons"
-              onClick={toggleStar}
-              style={{ color: "gold" }}
-            />
-          )}
-        </EmailActionCol>
-        <EmailSenderCol>
-          <EmailSenderText>{email.sender}</EmailSenderText>
-        </EmailSenderCol>
-        <EmailSubjectBodyCol>
-          <TagWrapper>
-            {email.tags.map((t) => (
-              <Tag>{t}</Tag>
-            ))}
-          </TagWrapper>
-          <EmailSubjectText className="bold">
-            {email.subject}&nbsp;
-          </EmailSubjectText>
-          <EmailBodyText> - {stripHtml(email.body)}</EmailBodyText>
-        </EmailSubjectBodyCol>
-        <EmailDateCol className="bold">{dateToFormat(email.date)}</EmailDateCol>
-      </StyledEmailRow>
+      <Moment format="MMM D" withTitle>
+        {formattedDate}
+      </Moment>
     );
-}
+  };
+
+  const toggleStar = () => {
+    const newStarred = [...starred];
+    let checked = { ...newStarred[id] };
+
+    if (!checked.starred) {
+      checked.starred = true;
+    } else {
+      checked.starred = false;
+    }
+
+    newStarred[id - 1] = checked;
+    setStarred(newStarred);
+  };
+
+
+  return (
+    <StyledEmailRow key={id}>
+      <EmailActionCol>
+        <input
+          type="checkbox"
+          name={id - 1}
+          onChange={() => toggleCheck(id - 1)}
+          checked={checked[id - 1].checked}
+        />
+        {starred[id - 1].starred === false ? (
+          <AiOutlineStar className="react-icons" onClick={toggleStar} />
+        ) : (
+          <AiFillStar
+            className="react-icons"
+            onClick={toggleStar}
+            style={{ color: "gold" }}
+          />
+        )}
+      </EmailActionCol>
+      <EmailSenderCol>
+        <EmailSenderText>{email.sender}</EmailSenderText>
+      </EmailSenderCol>
+      <EmailSubjectBodyCol>
+        <TagWrapper>
+          {email.tags.map((t) => (
+            <Tag>{t}</Tag>
+          ))}
+        </TagWrapper>
+        <EmailSubjectText className="bold">
+          {email.subject}&nbsp;
+        </EmailSubjectText>
+        <EmailBodyText> - {stripHtml(email.body)}</EmailBodyText>
+      </EmailSubjectBodyCol>
+      <EmailDateCol className="bold">{dateToFormat(email.date)}</EmailDateCol>
+    </StyledEmailRow>
+  );
+};
 
 export default EmailRow;

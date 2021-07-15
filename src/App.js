@@ -25,12 +25,14 @@ function App() {
   const [emails, setEmails] = useState(initialState);
   const [tags, setTags] = useState(['travel', 'work']);
 
+  
+
   return (
     <Wrapper>
       <Header />
       <Main>
-        <Sidebar data={data} tags={tags} />
-        <EmailIndex data={data} emails={emails}  setEmails={setEmails} tags={tags}/>
+        <Sidebar emails={emails} tags={tags} />
+        <EmailIndex emails={emails} setEmails={setEmails}  tags={tags} />
       </Main>
     </Wrapper>
   );

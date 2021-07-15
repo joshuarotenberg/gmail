@@ -1,43 +1,43 @@
 import React, { useState, useEffect } from "react";
-
+import { FaRegTrashAlt } from "react-icons/fa";
 import styled from "styled-components";
 import EmailRow from "./EmailRow";
 
-const EmailIndex = ({ data }) => {
-    let initialStarState = data.messages.map((m) => ({ id: m.id, starred: false  }));
+const EmailIndex = ({ emails, setEmails }) => {
+    let initialStarState = emails.map((m) => ({ id: m.id, starred: false  }));
     const [starred, setStarred] = useState(initialStarState);
 
 
-    let initialCheckedState = data.messages.map((m) => ({ id: m.id, checked: false  }));
-    const [checked, setChecked] = useState(initialCheckedState);
+    let initialCheckedState = emails.map((m) => ({ id: m.id, checked: false  }));
+    const [emailChecked, setEmailChecked] = useState(initialCheckedState);
 
 
     const [checkedAll, setCheckedAll] = useState(false);
 
     const toggleCheck = (inputName) => {
-        setChecked((prevState) => {
-        const newState = { ...prevState };
-        newState[inputName].checked = !prevState[inputName].checked;
-        return newState;
+        setEmailChecked((prevState) => {
+          const newState = { ...prevState };
+          newState[inputName].checked = !prevState[inputName].checked;
+          return newState;
         });
     };
 
     const selectAll = (value) => {
         setCheckedAll(value);
-        setChecked((prevState) => {
-            const newState = { ...prevState };
-            for (const inputName in newState) {
+        setEmailChecked((prevState) => {
+          const newState = { ...prevState };
+          for (const inputName in newState) {
             newState[inputName].checked = value;
-            }
-            return newState;
+          }
+          return newState;
         });
     };
 
       useEffect(() => {
         let allChecked = true;
-        for (const inputName in checked) {
-            console.log(checked[inputName]);
-          if (checked[inputName].checked === false) {
+        for (const inputName in emailChecked) {
+          console.log(emailChecked[inputName]);
+          if (emailChecked[inputName].checked === false) {
             allChecked = false;
           }
         }
@@ -46,13 +46,19 @@ const EmailIndex = ({ data }) => {
         } else {
           setCheckedAll(false);
         }
-      }, [checked]);
+      }, [emailChecked]);
 
+      
 
     const TableWrapper = styled.section`
         display: flex;
         flex-direction: column;
     `;
+
+     const EmailTable = styled.div`
+       display: flex;
+       flex-direction: column;
+     `;
 
     const TableHead = styled.section`
         display: flex;
@@ -66,6 +72,7 @@ const EmailIndex = ({ data }) => {
         margin-left: 15px;
         display: flex;
         flex-direction: row;
+        align-items: center;
     `;
 
     const EmailCount = styled.div`
@@ -73,9 +80,12 @@ const EmailIndex = ({ data }) => {
         position: fixed;
         right: 60px;
     `;
-
-    console.log(checked);
-
+ const handleRemoveItem = id => {
+   const temp = [...emails];
+   temp.splice(0, id);
+   setEmails(temp);
+ };
+   
   return (
     <TableWrapper>
       <TableHead>
@@ -85,30 +95,30 @@ const EmailIndex = ({ data }) => {
             onChange={(event) => selectAll(event.target.checked)}
             checked={checkedAll}
           />
-          <span>Delete</span>
-          <span>Mark read</span>
+          <FaRegTrashAlt
+            className="react-icons"
+            onClick={() => handleRemoveItem(emails.id)}
+          />
         </ActionButtonWrapper>
         <EmailCount>
           <span>
-            1 - {data.messages.length} of {data.messages.length}
+            1 - {emails.length} of {emails.length}
           </span>
         </EmailCount>
       </TableHead>
-      <table>
-        <tbody>
-          {data.messages.map((row) => (
+      <EmailTable>
+          {emails.map((row) => (
             <EmailRow
               key={row.id}
               id={row.id}
               email={row}
               starred={starred}
               setStarred={setStarred}
-              checked={checked}
+              checked={emailChecked}
               toggleCheck={toggleCheck}
             />
           ))}
-        </tbody>
-      </table>
+      </EmailTable>
     </TableWrapper>
   );
 };
