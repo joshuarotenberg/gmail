@@ -141,7 +141,7 @@ const EmailRow = ({ email, id, starred, setStarred, checked, toggleCheck }) => {
 
   const toggleStar = () => {
     const newStarred = [...starred];
-    let checked = { ...newStarred[id] };
+    let checked = { ...newStarred[id - 1] };
 
     if (!checked.starred) {
       checked.starred = true;
