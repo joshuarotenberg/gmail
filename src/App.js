@@ -32,7 +32,7 @@ function App() {
       <Header />
       <Main>
         <Sidebar emails={emails} tags={tags} />
-        <EmailIndex emails={emails} setEmails={setEmails}  tags={tags} />
+        <EmailIndex emails={emails} setEmails={setEmails} tags={tags} />
       </Main>
     </Wrapper>
   );

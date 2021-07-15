@@ -4,13 +4,14 @@ import styled from "styled-components";
 import EmailRow from "./EmailRow";
 
 const EmailIndex = ({ emails, setEmails }) => {
+    
     let initialStarState = emails.map((m) => ({ id: m.id, starred: false  }));
     const [starred, setStarred] = useState(initialStarState);
 
 
     let initialCheckedState = emails.map((m) => ({ id: m.id, checked: false  }));
     const [emailChecked, setEmailChecked] = useState(initialCheckedState);
-
+    let removals = [];
 
     const [checkedAll, setCheckedAll] = useState(false);
 
@@ -32,21 +33,35 @@ const EmailIndex = ({ emails, setEmails }) => {
           return newState;
         });
     };
+ 
 
-      useEffect(() => {
-        let allChecked = true;
-        for (const inputName in emailChecked) {
-          console.log(emailChecked[inputName]);
-          if (emailChecked[inputName].checked === false) {
-            allChecked = false;
+    const handleRemoveItem = () => {
+        const temp = [...emails];
+        for (let i = removals.length - 1; i >= 0; i--) {
+            temp.splice(i, 1);
           }
+        setEmails(temp);
+    };
+
+
+        
+    useEffect(() => {
+    let allChecked = true;
+    
+    for (const inputName in emailChecked) {
+        if (emailChecked[inputName].checked === false) {
+        allChecked = false;
+        }  else {
+            removals.push(emailChecked[inputName].id);
+            setCheckedAll(false);
         }
-        if (allChecked) {
-          setCheckedAll(true);
-        } else {
-          setCheckedAll(false);
-        }
-      }, [emailChecked]);
+    }
+    if (allChecked) {
+        setCheckedAll(true);
+    } else {
+        setCheckedAll(false);
+    }
+    }, [emailChecked, removals]);
 
       
 
@@ -80,11 +95,11 @@ const EmailIndex = ({ emails, setEmails }) => {
         position: fixed;
         right: 60px;
     `;
- const handleRemoveItem = id => {
-   const temp = [...emails];
-   temp.splice(0, id);
-   setEmails(temp);
- };
+
+
+
+
+
    
   return (
     <TableWrapper>
@@ -97,7 +112,8 @@ const EmailIndex = ({ emails, setEmails }) => {
           />
           <FaRegTrashAlt
             className="react-icons"
-            onClick={() => handleRemoveItem(emails.id)}
+            handleRemoveItem={handleRemoveItem}
+            onClick={() => handleRemoveItem()}
           />
         </ActionButtonWrapper>
         <EmailCount>
